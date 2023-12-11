@@ -122,7 +122,9 @@ def render_one_mesh(obj_path):
 
 def images_to_video(folder_path):
     img_arr = []
-    for filename in glob.glob(f'{folder_path}/*.png'):
+    img_paths = glob.glob(f'{folder_path}/*.png')
+    img_paths.sort(key = lambda x : os.path.split(x)[-1][:-4])
+    for filename in img_paths:
         img = cv2.imread(filename)
         height, width, _ = img.shape
         size = (width, height)
@@ -130,7 +132,7 @@ def images_to_video(folder_path):
     print(f'there are {len(img_arr)} images under this folder')
     print(f'img size: h={size[1]}, w={size[0]}')
     
-    out = cv2.VideoWriter(f'{folder_path}/video.avi',cv2.VideoWriter_fourcc(*'DIVX'), 15, size)
+    out = cv2.VideoWriter(f'test_video.mp4',cv2.VideoWriter_fourcc(*'mp4v'), 30, size)
     for i in range(len(img_arr)):
         out.write(img_arr[i])
     out.release()
@@ -138,16 +140,19 @@ def images_to_video(folder_path):
     
 
 def main():
-    entity_path = 'm--20180227--0000--6795937--GHS'
-    assets = 'tracked_mesh'
-    eid = 'E057_Cheeks_Puffed'
-    seq_path = os.path.join(entity_path, assets, eid)
-    render_single_mesh_sequence(seq_path)
+    # entity_path = 'm--20180227--0000--6795937--GHS'
+    # assets = 'tracked_mesh'
+    # eid = 'E057_Cheeks_Puffed'
+    # seq_path = os.path.join(entity_path, assets, eid)
+    # render_single_mesh_sequence(seq_path)
     
     
     # obj_path = 'm--20180227--0000--6795937--GHS/tracked_mesh/E057_Cheeks_Puffed/021897.obj'
     # render_one_mesh(obj_path)
-        
+
+    image_folder = 'datasets/multiface/minidataset/m--20180227--0000--6795937--GHS/images/E057_Cheeks_Puffed/400015'
+    images_to_video(image_folder)
+    
    
 if __name__ == '__main__':
     main()
