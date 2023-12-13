@@ -1,10 +1,14 @@
 import cv2 
 import mediapipe as mp 
 
-def online_show_video_detection(video_path):
+def online_show_video_detection(video_path, refine=False):
     # Face Mesh
     mp_face_mesh = mp.solutions.face_mesh 
-    face_mesh = mp_face_mesh.FaceMesh()
+    
+    # Whether to further refine the landmark coordinates
+    # around the eyes and lips, and output additional landmarks around the
+    # irises. Default to False.
+    face_mesh = mp_face_mesh.FaceMesh(refine_landmarks=refine)  
 
     # load video 
     cap = cv2.VideoCapture(video_path)
@@ -30,17 +34,17 @@ def online_show_video_detection(video_path):
             for i in range(468):
                 pt1 = facial_landmarks.landmark[i]
                 x, y, z = int(pt1.x * w), int(pt1.y * h), int(pt1.z)
-                cv2.circle(image, (x, y), 2, (100, 100, 0), -1)
+                cv2.circle(image, (x, y), 2, (255, 255, 255), -1)
                 # cv2.putText(image, str(i), (x, y), 0, 1, (0, 0, 0))
         cv2.imshow("Image", image)
         cv2.waitKey(1)
     
 
-def get_detected_images(video_path):
+def get_detected_images(video_path, refine):
     
     # Face Mesh
     mp_face_mesh = mp.solutions.face_mesh 
-    face_mesh = mp_face_mesh.FaceMesh()
+    face_mesh = mp_face_mesh.FaceMesh(refine_landmarks=refine)
 
     # load video 
     cap = cv2.VideoCapture(video_path)
@@ -63,11 +67,11 @@ def get_detected_images(video_path):
         result = face_mesh.process(rgb_image)
 
         for facial_landmarks in result.multi_face_landmarks:
-            # print(f'num of lk = {len(facial_landmarks.landmark)}') # 468
-            for i in range(468):
+            print(f'num of lk = {len(facial_landmarks.landmark)}') # 468
+            for i in range(len(facial_landmarks.landmark)):
                 pt1 = facial_landmarks.landmark[i]
                 x, y, z = int(pt1.x * w), int(pt1.y * h), int(pt1.z)
-                cv2.circle(image, (x, y), 5, (100, 100, 0), -1)
+                cv2.circle(image, (x, y), 5, (255, 255, 255), -1)
                 # cv2.putText(image, str(i), (x, y), 0, 1, (0, 0, 0))
                 
         img_arr.append(image) 
@@ -76,8 +80,8 @@ def get_detected_images(video_path):
     
     return img_arr 
 
-def video_to_video_detection(from_path, to_path):
-    img_arr = get_detected_images(from_path)
+def video_to_video_detection(from_path, to_path, refine):
+    img_arr = get_detected_images(from_path, refine)
     h, w, _ = img_arr[0].shape
     print(f'there are {len(img_arr)} frames for video: {from_path}')
     
@@ -87,8 +91,9 @@ def video_to_video_detection(from_path, to_path):
     out.release()
 
 if __name__ == "__main__":
-    from_video_path = 'test_video.mp4'
-    to_video_path = 'annotated_video.mp4'
-    video_to_video_detection(from_video_path, to_video_path)
+    refine = True
+    from_video_path = 'detection_results_vis/video_right_side.mp4'
+    to_video_path = 'detection_results_vis/annotated_video_478_right_side.mp4'
+    video_to_video_detection(from_video_path, to_video_path, refine)
     
 

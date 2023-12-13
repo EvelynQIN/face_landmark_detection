@@ -1,0 +1,10 @@
+beautifulsoup4
+requests
+argparse
+trimesh
+ffmpeg
+pyrender
+pymeshlab
+matplotlib
+opencv-python
+dlib    # for 68 face alignment 
