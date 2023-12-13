@@ -80,6 +80,7 @@ def get_detected_images(video_path, refine):
     
     return img_arr 
 
+
 def video_to_video_detection(from_path, to_path, refine):
     img_arr = get_detected_images(from_path, refine)
     h, w, _ = img_arr[0].shape
@@ -90,10 +91,17 @@ def video_to_video_detection(from_path, to_path, refine):
         out.write(img_arr[i])
     out.release()
 
+
+
+
+
+
+
+
 if __name__ == "__main__":
     refine = True
-    from_video_path = 'detection_results_vis/video_right_side.mp4'
-    to_video_path = 'detection_results_vis/annotated_video_478_right_side.mp4'
+    from_video_path = 'detection_results_vis/video_right_side_400059.mp4'
+    to_video_path = 'detection_results_vis/annotated_video_478_right_side_400059.mp4'
     video_to_video_detection(from_video_path, to_video_path, refine)
     
 

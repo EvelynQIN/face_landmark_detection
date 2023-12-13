@@ -6,10 +6,14 @@ from skimage import io, img_as_ubyte
 
 def detect_online_one_image(img_path):
     # face detection model
+    face_detector_kwargs = {
+        'back_model': True
+    }
     fa = face_alignment.FaceAlignment(
         face_alignment.LandmarksType.TWO_D, 
         flip_input=False,
         face_detector='blazeface',    # support detectors ['dlib', 'blazeface', 'cfd]
+        face_detector_kwargs = face_detector_kwargs,
         dtype=torch.bfloat16, device='cuda',
     )
 
@@ -30,10 +34,14 @@ def detect_online_one_image(img_path):
 def get_detected_images(video_path):
     
     # Face Mesh
+    face_detector_kwargs = {
+        'back_model': True
+    }
     fa_3d = face_alignment.FaceAlignment(face_alignment.LandmarksType.THREE_D, 
                                          flip_input=False,
                                          face_detector='blazeface', 
-                                         dtype=torch.bfloat16, device='cuda'
+                                         dtype=torch.bfloat16, device='cuda',
+                                         face_detector_kwargs = face_detector_kwargs,
                                         )
 
     # load video 
@@ -76,10 +84,10 @@ def video_to_video_detection(from_path, to_path):
     out.release()
 
 if __name__ == "__main__":
-    from_video_path = 'detection_results_vis/video_right_side.mp4'
-    to_video_path = 'detection_results_vis/annotated_video_68_right_side.mp4'
+    from_video_path = 'detection_results_vis/video_right_side_400059.mp4'
+    to_video_path = 'detection_results_vis/annotated_video_68_right_side_400059.mp4'
     video_to_video_detection(from_video_path, to_video_path)
     
-    # img_path = "datasets/multiface/minidataset/m--20180227--0000--6795937--GHS/images/E057_Cheeks_Puffed/400015/021897.png"
+    # img_path = "datasets/multiface/minidataset/m--20180227--0000--6795937--GHS/images/E057_Cheeks_Puffed/400059/021897.png"
     # # img_path = "image.png"
     # detect_online_one_image(img_path)

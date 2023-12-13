@@ -5,11 +5,11 @@ from skimage import io
 import collections
 from skimage.transform import rescale
 
-IMAGE_PATH = "datasets/multiface/minidataset/m--20180227--0000--6795937--GHS/images/E057_Cheeks_Puffed/400015/021897.png"
+IMAGE_PATH = "datasets/multiface/minidataset/m--20180227--0000--6795937--GHS/images/E057_Cheeks_Puffed/400031/021897.png"
 # Optionally set detector and some additional detector parameters
 face_detector = 'blazeface'
 face_detector_kwargs = {
-    # "filter_threshold" : 0.2
+    'back_model': True
 }
 
 # Run the 3D face alignment on a test image, without CUDA.

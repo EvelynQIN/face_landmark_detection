@@ -234,12 +234,12 @@ def main():
     # render_single_mesh_sequence(seq_path)
     
     
-    obj_path = 'datasets/multiface/minidataset/m--20180227--0000--6795937--GHS/tracked_mesh/E057_Cheeks_Puffed/021897.obj'
-    render_one_mesh_to_view(obj_path)
+    # obj_path = 'datasets/multiface/minidataset/m--20180227--0000--6795937--GHS/tracked_mesh/E057_Cheeks_Puffed/021897.obj'
+    # render_one_mesh_to_view(obj_path)
     
-    # to_path_video = "detection_results_vis/video_right_side.mp4"
-    # image_folder = 'datasets/multiface/minidataset/m--20180227--0000--6795937--GHS/images/E057_Cheeks_Puffed/400018'
-    # images_to_video(image_folder, to_path_video)
+    to_path_video = "detection_results_vis/video_right_side_400059.mp4"
+    image_folder = 'datasets/multiface/minidataset/m--20180227--0000--6795937--GHS/images/E057_Cheeks_Puffed/400059'
+    images_to_video(image_folder, to_path_video)
     
    
 if __name__ == '__main__':
